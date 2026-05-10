@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storage test — RustFS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="backdrop"></div>
+  <main class="shell">
+    <header class="top">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <h1>RustFS test drive</h1>
+          <p class="muted">Sign in, upload files or folders; data lives in your S3-compatible bucket.</p>
+        </div>
+      </div>
+      <div id="userChip" class="user-chip hidden" aria-live="polite">
+        <span id="userEmail" class="user-email"></span>
+        <button type="button" id="logoutBtn" class="btn btn-ghost">Log out</button>
+      </div>
+    </header>
+
+    <section id="guestPanel" class="panel grid-2">
+      <div class="card">
+        <h2>Sign in</h2>
+        <form id="loginForm" class="form">
+          <label>Email<input name="email" type="email" autocomplete="username" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+          <button type="submit" class="btn btn-primary">Log in</button>
+          <p id="loginError" class="error" role="alert"></p>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Create account</h2>
+        <form id="signupForm" class="form">
+          <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Password <span class="hint">min 8 characters</span><input name="password" type="password" autocomplete="new-password" minlength="8" required /></label>
+          <button type="submit" class="btn btn-secondary">Sign up</button>
+          <p id="signupError" class="error" role="alert"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="appPanel" class="panel hidden">
+      <div class="card upload-card">
+        <h2>Your files</h2>
+        <p class="muted">Upload preserves folder paths. After logging out or signing in elsewhere, objects stay under your prefix in the bucket.</p>
+        <div class="upload-row">
+          <label class="btn btn-secondary btn-file">
+            Choose files
+            <input id="fileInput" type="file" name="files" multiple hidden />
+          </label>
+          <label class="btn btn-secondary btn-file">
+            Choose folder
+            <input id="folderInput" type="file" name="folder" webkitdirectory multiple hidden />
+          </label>
+          <button type="button" id="refreshBtn" class="btn btn-ghost">Refresh list</button>
+        </div>
+        <p id="uploadStatus" class="status" aria-live="polite"></p>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="files-table">
+            <thead>
+              <tr>
+                <th>Path</th>
+                <th class="col-num">Size</th>
+                <th class="col-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="fileRows"></tbody>
+          </table>
+        </div>
+        <p id="emptyHint" class="muted empty hidden">No uploads yet.</p>
+      </div>
+    </section>
+
+    <p id="globalError" class="error centered hidden" role="alert"></p>
+  </main>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
